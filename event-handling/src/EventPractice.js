@@ -17,6 +17,7 @@ class EventPractice extends Component {
     // 바벨을 이용해 arrow function으로 재정의
     handleChange = (e) => {
         this.setState({
+            // 여기에서 []는 key값으로 사용할 때를 의미
             [e.target.name]: e.target.value
         });
     }
