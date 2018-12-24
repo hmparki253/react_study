@@ -7,19 +7,20 @@ class EventPractice extends Component {
     }
 
     // this에 접근할 수 있게 처리하는 방법
-    constructor(props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleClick = this.handleClick.bind(this);
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.handleChange = this.handleChange.bind(this);
+    //     this.handleClick = this.handleClick.bind(this);
+    // }
 
-    handleChange(e) {
+    // 바벨을 이용해 arrow function으로 재정의
+    handleChange = (e) => {
         this.setState({
             message: e.target.value
         });
     }
 
-    handleClick() {
+    handleClick = () => {
         alert(this.state.message);
         this.setState({
             message: ''
