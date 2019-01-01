@@ -1,0 +1,21 @@
+/* CSS 모듈은 파일이름_클래스이름__해쉬값 형태로 자동으로 고유한
+값으로 만들어주어 중첩현상을 방지해준다. */
+
+.wrapper {
+  background: black;
+  padding: 1rem;
+  color: white;
+  font-size: 2rem;
+}
+
+.inverted {
+  color: black;
+  background: white;
+}
+  
+/* 글로벌 CSS 를 작성하고 싶다면 */
+
+:global .something {
+  font-weight: 800;
+  color: aqua;
+}

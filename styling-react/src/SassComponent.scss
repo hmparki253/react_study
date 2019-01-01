@@ -1,4 +1,5 @@
-@import './styles/utils.scss'; // 다른 scss파일 불러오기
+// @import 'utils.scss'; // 다른 scss파일 불러오기
+// webpack.config.js의 sassModuleRegex를 수정하여 위 구문 필요x
 
 .SassComponent {
     display: flex;
