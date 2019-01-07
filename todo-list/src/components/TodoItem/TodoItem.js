@@ -5,6 +5,10 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 class TodoItem extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.props.done !== nextProps.done;
+    }
+
     render() {
         // 비구조화 할당문법
         // ex const done = this.props; const children = this.props;
