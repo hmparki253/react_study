@@ -9,6 +9,8 @@ class TodoList extends Component {
 
     render() {
         const { todos, onToggle, onRemove } = this.props;
+        // 전달받은 todos를 map을 이용하여
+        // todoItem들로 구성된 todoList를 만들어준다.
         const todoList = todos.map(
             todo => (
                 <TodoItem
@@ -20,6 +22,7 @@ class TodoList extends Component {
                 </TodoItem>
             )
         );
+        // 위에서 만들어준 todoList를 렌더링
         return(
             <div>
                 {todoList}

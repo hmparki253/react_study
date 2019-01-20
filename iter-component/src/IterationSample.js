@@ -37,7 +37,7 @@ class IterationSample extends Component {
     // }
 
     handleRemove = (index) => {
-        const { names } = this.state;
+          const { names } = this.state;
         this.setState({
             names: names.filter((item, i) => i !== index)
         });
