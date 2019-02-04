@@ -1,5 +1,6 @@
 import * as types from '../actions/ActionTypes'
 
+// 리듀서 함수
 const initialState = {
     counters: [
         {
@@ -9,6 +10,7 @@ const initialState = {
     ]
 }
 
+// 리듀서 함수인 counter => 각 counter 마다를 담당한다
 function counter(state = initialState, action) {
     const { counters } = state;
 
