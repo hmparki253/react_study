@@ -104,7 +104,8 @@ exports.remove = async (ctx) => {
 
   try {
     await Post.findByIdAndRemove(id).exec();
-    ctx.staus = 204;
+    console.log('Post 지났옹?');
+    ctx.status = 204;
   } catch (e) {
     ctx.throw(e, 500);
   }
