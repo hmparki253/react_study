@@ -6,10 +6,18 @@ import { withRouter } from 'react-router-dom';
 
 import * as editorActions from 'store/modules/editor';
 
+import queryString from 'query-string';
+
 class EditorHeaderContainer extends Component {
+  
   componentDidMount() {
-    const { EditorActions } = this.props;
+    const { EditorActions, location } = this.props;
     EditorActions.initialize();
+
+    const { id } = queryString.parse(location.search);
+    if(id) {
+      EditorActions.getPost(id);
+    }
   }
 
   handleGoBack = () => {
@@ -18,13 +26,21 @@ class EditorHeaderContainer extends Component {
   }
 
   handleSubmit = async () => {
-    const { title, markdown, tags, EditorActions, history } = this.props;
+    const { title, markdown, tags, EditorActions, history, location } = this.props;
     const post = {
       title,
       body: markdown,
       tags: tags === "" ? [] : [...new Set(tags.split(',').map(tag => tag.trim()))]
     };
     try {
+      // id가 존재하면 editPost 호출하기
+      const { id } = queryString.parse(location.search);
+      console.log(id);
+      if(id) {
+        await EditorActions.editPost({id, ...post});
+        history.push(`/post/${id}`);
+        return;
+      }
       await EditorActions.writePost(post);
       history.push(`/post/${this.props.postId}`);
     } catch (e) {
@@ -34,11 +50,13 @@ class EditorHeaderContainer extends Component {
 
   render() {
     const { handleGoBack, handleSubmit } = this;
+    const { id } = queryString.parse(this.props.location.search);
 
     return (
       <EditorHeader
         onGoBack={handleGoBack}
         onSubmit={handleSubmit}
+        isEdit={id ? true : false}
       />
     );
   }

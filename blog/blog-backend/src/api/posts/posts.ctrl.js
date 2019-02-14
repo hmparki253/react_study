@@ -51,6 +51,11 @@ exports.write = async (ctx) => {
 // 포스트 목록 조회
 exports.list = async (ctx) => {
   const page = parseInt(ctx.query.page || 1, 10);
+  const { tag } = ctx.query;
+
+  const query = tag ? {
+    tags: tag
+  } : {};
 
   if (page < 1) {
     ctx.status = 400;
@@ -58,7 +63,7 @@ exports.list = async (ctx) => {
   }
 
   try {
-    const posts = await Post.find()
+    const posts = await Post.find(query)
       .sort({ _id: -1 })
       .limit(10)
       .skip((page - 1) * 10)
@@ -67,7 +72,7 @@ exports.list = async (ctx) => {
     const postCount = await Post.countDocuments().exec();
     const limitBodyLength = post => ({
       ...post,
-      body: post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`
+      body: post.body.length < 350 ? post.body : `${post.body.slice(0, 350)}...`
     });
     ctx.body = posts.map(limitBodyLength);
     ctx.set('Last-Page', Math.ceil(postCount / 10));
