@@ -7,9 +7,12 @@ const bodyParser = require('koa-bodyparser');
 const mongoose = require('mongoose');
 const api = require('./api');
 
+const session = require('koa-session');
+
 const {
   PORT: port = 4000,
   MONGO_URI: mongoURI,
+  COOKIE_SIGN_KEY: signKey
 } = process.env;
 
 mongoose.Promise = global.Promise;
@@ -22,11 +25,17 @@ mongoose.connect(mongoURI, { useNewUrlParser: true }).then(
 const app = new Koa();
 const router = new Router();
 
+app.use(bodyParser());
+
+const sessionConfig = {
+  maxAge: 86400000
+};
+
+app.use(session(sessionConfig, app));
+app.keys = [signKey];
 
 // api 라우터 설정
 router.use('/api', api.routes());
-
-app.use(bodyParser());
 
 // 미들웨어는 app.use로 등록하는 순서대로 처리한다.
 // app.use(async (ctx, next) => {

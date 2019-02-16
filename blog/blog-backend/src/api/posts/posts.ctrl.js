@@ -14,6 +14,14 @@ exports.checkObjectId = (ctx, next) => {
   return next();
 };
 
+exports.checkLogin = (ctx, next) => {
+  if (!ctx.session.logged) {
+    ctx.status = 401;
+    return null;
+  }
+  return next();
+};
+
 /* 포스트 작성
   POST /api/posts
   { title, body }
@@ -104,7 +112,6 @@ exports.remove = async (ctx) => {
 
   try {
     await Post.findByIdAndRemove(id).exec();
-    console.log('Post 지났옹?');
     ctx.status = 204;
   } catch (e) {
     ctx.throw(e, 500);
